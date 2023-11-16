@@ -13,12 +13,15 @@ const input = await Actor.getInput();
 
 const crawler = new CheerioCrawler({
     async requestHandler({ $, request, enqueueLinks }) {
-        // Extract <title> text with Cheerio.
-        // See Cheerio documentation for API docs.
         const title = $('title').text();
-        const links = getLinks($, request.url)
+        // const links = getLinks($, request.url)
         const body = getBodyText($)
         const wordcount = getWordcount(body)
+
+        let redirected = false;
+        if (request.url != request.loadedUrl) {
+            redirected = true;
+        }
 
         // Log stuff
         console.log(`Found ${wordcount} words on ${title}.`);
@@ -26,17 +29,24 @@ const crawler = new CheerioCrawler({
 
         // Store the data
         await Dataset.pushData({
-            title,
-            // links,
-            wordcount,
+            httpStatus: response.status,
+            title: title,
+            wordcount: wordcount,
+            redirected: redirected,
+            url: request.url,
+            loadedUrl: request.loadedUrl,
+            // links: links
         })
 
         // The default behavior of enqueueLinks is to stay on the same hostname,
         // so it does not require any parameters.
         await enqueueLinks({
             transformRequestFunction(req) {
-                // ignore all links ending with `.pdf`
+                // ignore all url with certain endings
                 if (req.url.endsWith('.pdf')) return false;
+                if (req.url.endsWith('.jpg')) return false;
+                if (req.url.endsWith('.jpeg')) return false;
+                if (req.url.endsWith('.png')) return false;
                 return req;
             },
         });
@@ -47,6 +57,6 @@ const crawler = new CheerioCrawler({
 });
 
 await crawler.run(input.startUrls);
-// await crawler.run(['https://vetframe.com']);
+// await crawler.run(['https://www.elevationscu.com']);
 
 await Actor.exit();
