@@ -4,7 +4,7 @@ import { CheerioCrawler, Dataset } from 'crawlee';
 // import { getTitle } from './helpers/title.js'
 import { getLinks } from './helpers/links.js'
 import { getIFrames } from './helpers/iframes.js'
-import { getTables } from './helpers/tables.js'
+// import { getTables } from './helpers/tables.js'
 import { getScripts } from './helpers/scripts.js'
 import { getBodyText } from './helpers/body.js'
 import { getWordcount } from './helpers/count.js'
