@@ -12,11 +12,11 @@ const getTables = ($html) => {
             .prop('outerHTML') // Get outer <table> tag
             .replace(/\s+/g, ' ') // Remove line breaks
 
-        const domPath = getElementDomPath($html(this))
+        // const domPath = getElementDomPath($html(this))
 
         return {
             table: table,
-            domPath: domPath,
+            // domPath: domPath,
         }
     }).get()
 

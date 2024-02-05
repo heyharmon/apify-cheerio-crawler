@@ -6,7 +6,13 @@
  */
 const getWordcount = (string) => {
     // Match on any sequence of non-whitespace characters
-    return string.match(/\S+/g).length
+    const wordcount = string.match(/\S+/g).length
+
+    if (wordcount) {
+        return wordcount
+    }
+
+    return null
 }
 
 export {
