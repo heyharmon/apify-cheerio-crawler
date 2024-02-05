@@ -57,7 +57,7 @@ const crawler = new CheerioCrawler({
         }
 
         // Log anything that might be useful to see during crawl.
-        // console.log(`Found ${wordcount} words on ${request.loadedUrl}.`);
+        console.log(`Found ${wordcount} words on ${request.loadedUrl}.`);
         // console.log('html: ', $.text())
         // console.log('Scripts: ', scripts)
         // console.log('IFrames: ', iframes)
@@ -79,8 +79,8 @@ const crawler = new CheerioCrawler({
     }
 });
 
-// await crawler.run(input.startUrls);
-await crawler.run(['https://nuxt-scraper-testing-site.netlify.app']);
+await crawler.run(input.startUrls);
+// await crawler.run(['https://nuxt-scraper-testing-site.netlify.app']);
 // await crawler.run(['https://vetframe.com']);
 
 await Actor.exit();
