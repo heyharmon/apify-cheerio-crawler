@@ -1,7 +1,7 @@
 // For more information, see https://crawlee.dev/
 import { Actor } from 'apify';
 import { CheerioCrawler, Dataset } from 'crawlee';
-import { getTitle } from './helpers/title.js'
+// import { getTitle } from './helpers/title.js'
 import { getLinks } from './helpers/links.js'
 import { getIFrames } from './helpers/iframes.js'
 import { getTables } from './helpers/tables.js'
@@ -45,7 +45,7 @@ const crawler = new CheerioCrawler({
 
         const scripts = getScripts($)
 
-        const tables = getTables($) 
+        // const tables = getTables($) 
 
         const body = getBodyText($)
 
