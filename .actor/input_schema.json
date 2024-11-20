@@ -4,17 +4,16 @@
     "type": "object",
     "schemaVersion": 1,
     "properties": {
-        "startUrls": {
-            "title": "Start URLs",
-            "type": "array",
-            "description": "URLs to start with.",
-            "editor": "requestListSources"
+        "url": {
+            "title": "URL to check",
+            "type": "string",
+            "description": "An array of URLs to check.",
+            "editor": "textfield"
         },
         "maxRequestsPerCrawl": {
             "title": "Max Requests per Crawl",
             "type": "integer",
-            "description": "Maximum number of requests that can be made by this crawler.",
-            "default": 1
+            "description": "Maximum number of requests that can be made by this crawler."
         },
         "proxyConfiguration": {
 			"sectionCaption": "Proxy and HTTP configuration",
