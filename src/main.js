@@ -1,7 +1,6 @@
 import { Actor } from 'apify';
 import { CheerioCrawler, Dataset } from 'crawlee';
 import { getLinks } from './helpers/links.js';
-import { getBodyText } from './helpers/body.js';
 
 await Actor.init();
 
@@ -11,8 +10,9 @@ const {
     maxRequestsPerCrawl = 999,
 } = await Actor.getInput() ?? {};
 
-// Counter for discovered pages
+// Counter for discovered pages and storage for pages
 let pageCount = 0;
+const pages = [];
 
 const crawler = new CheerioCrawler({
     maxRequestsPerCrawl,
@@ -39,11 +39,9 @@ const crawler = new CheerioCrawler({
         // Log useful information
         log.info(`${title}`, { url: request.loadedUrl });
 
-        // Increment page count
+        // Increment page count and add to pages array
         pageCount++;
-
-        // Store the data for the current page
-        await Dataset.pushData({
+        pages.push({
             title,
             url: request.loadedUrl,
             links,
@@ -54,10 +52,13 @@ const crawler = new CheerioCrawler({
 // Run the crawler
 await crawler.run([url]);
 
-// Push metadata after the crawl is complete
-await Dataset.pushData({
-    url: url,
+// Prepare and push the final dataset structure
+const result = {
+    url,
     totalPages: pageCount,
-});
+    pages,
+};
+
+await Dataset.pushData(result);
 
 await Actor.exit();
